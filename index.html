@@ -3,116 +3,136 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>All Recipes App</title>
+  <title>MoodMeal – Global Recipes, Local Taste</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: sans-serif;
       margin: 0;
-      padding: 0;
-      background-color: #fff8f5;
-    }
-
-    header {
-      background-color: #ff7043;
-      color: white;
-      text-align: center;
-      padding: 16px;
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .container {
-      padding: 16px;
-    }
-
-    .search-bar {
-      display: flex;
-      margin-bottom: 20px;
-    }
-
-    .search-bar input {
-      flex: 1;
-      padding: 12px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-
-    .card {
-      background-color: white;
-      border-radius: 12px;
-      margin-bottom: 16px;
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    .card img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
-
-    .card-body {
-      padding: 16px;
-    }
-
-    .card-body h2 {
-      margin: 0 0 10px;
-      font-size: 20px;
+      background: #fffaf4;
       color: #333;
     }
-
-    .card-body p {
-      margin: 4px 0;
-      font-size: 14px;
-      color: #555;
-    }
-
-    .btn {
-      display: inline-block;
-      background-color: #ff7043;
+    header {
+      background: #ff7043;
       color: white;
-      padding: 10px 16px;
-      border: none;
-      border-radius: 8px;
-      margin-top: 12px;
-      font-size: 16px;
       text-align: center;
+      padding: 1rem 0;
+    }
+    nav {
+      background: #fff;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    nav a {
       text-decoration: none;
-      cursor: pointer;
-    }
-
-    .section-title {
-      font-size: 18px;
-      margin: 24px 0 12px;
       color: #ff7043;
+      font-weight: bold;
+      margin: 0.5rem;
     }
-
-    form {
-      background-color: white;
-      padding: 16px;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    form input, form textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 12px;
-      font-size: 14px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-
-    footer {
+    .hero {
       text-align: center;
-      padding: 16px;
-      font-size: 12px;
-      color: #aaa;
-      margin-top: 40px;
+      padding: 2rem;
+      background: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=60') no-repeat center center/cover;
+      color: white;
+    }
+    .hero h2 {
+      background: rgba(0,0,0,0.5);
+      display: inline-block;
+      padding: 1rem;
+      border-radius: 10px;
+    }
+    .features {
+      padding: 2rem 1rem;
+    }
+    .feature-card {
+      background: #fff;
+      margin: 1rem 0;
+      padding: 1rem;
+      border-left: 5px solid #ff7043;
+      border-radius: 8px;
+    }
+    footer {
+      background: #ff7043;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+    @media (min-width: 600px) {
+      .features {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      .feature-card {
+        width: 48%;
+      }
     }
   </style>
 </head>
 <body>
 
-  <header>🍽️ MoodFood App</h
+  <header>
+    <h1>MoodMeal</h1>
+    <p>Your Smart Recipe & Meal Guide</p>
+  </header>
+
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Discover Recipes</a>
+    <a href="#">Upload Your Recipe</a>
+    <a href="#">Mood-Based Suggestions</a>
+    <a href="#">Grocery Integration</a>
+    <a href="#">Meal Planner</a>
+    <a href="#">Health & Nutrition</a>
+    <a href="#">Community Feed</a>
+  </nav>
+
+  <div class="hero">
+    <h2>Cook Smart, Eat Happy – Anytime, Anywhere</h2>
+  </div>
+
+  <section class="features">
+    <div class="feature-card">
+      <h3>🌎 Global & Indian Recipes</h3>
+      <p>Find recipes from around the world, localized for Indian kitchens and tastes.</p>
+    </div>
+    <div class="feature-card">
+      <h3>🧠 AI-based Suggestions</h3>
+      <p>Get recipes based on mood, budget (₹50–₹500), available ingredients, or past favorites.</p>
+    </div>
+    <div class="feature-card">
+      <h3>📦 Grocery Ordering</h3>
+      <p>Link your ingredients list to BlinkIt/Zepto and order instantly.</p>
+    </div>
+    <div class="feature-card">
+      <h3>🍲 Upload Your Recipe</h3>
+      <p>Join our food community by posting your favorite recipes with photos and stories.</p>
+    </div>
+    <div class="feature-card">
+      <h3>🧑‍🍳 Chef Advice</h3>
+      <p>Connect with professional chefs for tips and cooking sessions (coming soon).</p>
+    </div>
+    <div class="feature-card">
+      <h3>🗓️ Meal Plans</h3>
+      <p>Generate weekly meal plans with healthy, balanced dishes customized to your goals.</p>
+    </div>
+    <div class="feature-card">
+      <h3>📄 Save & Print</h3>
+      <p>Save recipes as PDF, share with family, or print for kitchen use.</p>
+    </div>
+    <div class="feature-card">
+      <h3>❤️ Health-Conscious Filters</h3>
+      <p>Recipes tailored to dietary needs: allergies, diabetes, keto, gluten-free, etc.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>Made with ❤️ by MoodMeal Team</p>
+    <p>Contact: <a href="mailto:shreyasbhatkal26@gmail.com" style="color:white;">shreyasbhatkal26@gmail.com</a> | <a href="https://www.moodmeal.in" style="color:white;">www.moodmeal.in</a></p>
+  </footer>
+
+</body>
+</html>
