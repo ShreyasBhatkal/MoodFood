@@ -8,11 +8,11 @@
     body {
       font-family: sans-serif;
       margin: 0;
-      background: #fffaf4;
+      background: #fff;
       color: #333;
     }
     header {
-      background: #ff7043;
+      background: #e53935;
       color: white;
       text-align: center;
       padding: 1rem 0;
@@ -27,14 +27,14 @@
     }
     nav a {
       text-decoration: none;
-      color: #ff7043;
+      color: #e53935;
       font-weight: bold;
       margin: 0.5rem;
     }
     .hero {
       text-align: center;
       padding: 2rem;
-      background: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=60') no-repeat center center/cover;
+      background: url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=60') no-repeat center center/cover;
       color: white;
     }
     .hero h2 {
@@ -47,18 +47,31 @@
       padding: 2rem 1rem;
     }
     .feature-card {
-      background: #fff;
+      background: #fff0f0;
       margin: 1rem 0;
       padding: 1rem;
-      border-left: 5px solid #ff7043;
+      border-left: 5px solid #d32f2f;
       border-radius: 8px;
     }
     footer {
-      background: #ff7043;
+      background: #e53935;
       color: white;
       text-align: center;
       padding: 1rem;
       font-size: 0.9rem;
+    }
+    .device-showcase {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+    .device-showcase img {
+      max-width: 300px;
+      margin: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
     @media (min-width: 600px) {
       .features {
@@ -68,6 +81,10 @@
       }
       .feature-card {
         width: 48%;
+      }
+      .device-showcase {
+        flex-direction: row;
+        justify-content: center;
       }
     }
   </style>
@@ -129,9 +146,14 @@
     </div>
   </section>
 
+  <section class="device-showcase">
+    <img src="https://mockuphone.com/static/images/phones/apple-iphone-14-pro-max-deep-purple.png" alt="iPhone 16 Mockup with MoodMeal UI">
+    <img src="https://mockuphone.com/static/images/phones/samsung-galaxy-s24-ultra-black.png" alt="Samsung Galaxy S24 Mockup with MoodMeal UI">
+  </section>
+
   <footer>
     <p>Made with ❤️ by MoodMeal Team</p>
-    <p>Contact: <a href="mailto:shreyasbhatkal26@gmail.com" style="color:white;">shreyasbhatkal26@gmail.com</a> | <a href="https://www.moodmeal.in" style="color:white;">www.moodmeal.in</a></p>
+    <p>Contact: <a href="mailto:moodmeal@gmail.com" style="color:white;">shreyasbhatkal26@gmail.com</a> | <a href="https://www.moodmeal.in" style="color:white;">www.moodmeal.in</a></p>
   </footer>
 
 </body>
