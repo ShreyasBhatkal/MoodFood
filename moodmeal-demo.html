@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodMeal - AI-Powered Recipe Recommendations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+        }
+
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #4ECDC4;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .welcome-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #FF6B6B;
+            border: 2px solid #FF6B6B;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Mood Selection */
+        .mood-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #333;
+        }
+
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .mood-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .mood-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .mood-card.selected {
+            border-color: #FF6B6B;
+            background: linear-gradient(135deg, #FFE5E5, #FFF0F0);
+        }
+
+        .mood-emoji {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .mood-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .mood-description {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Recipe Grid */
+        .recipe-section {
+            margin-bottom: 3rem;
+        }
+
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .recipe-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .recipe-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+
+        .recipe-content {
+            padding: 1.5rem;
+        }
+
+        .recipe-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .recipe-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .favorite-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #FF6B6B;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .favorite-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .recipe-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .recipe-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: #FFD700;
+        }
+
+        .recipe-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #E8F5E8;
+            color: #4CAF50;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .recipe-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .recipe-info {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .btn-cook {
+            background: linear-gradient(135deg, #4ECDC4, #44A08D);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cook:hover {
+            transform: scale(1.05);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            margin-bottom: 3rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .stat-recipes { color: #FF6B6B; }
+        .stat-favorites { color: #4ECDC4; }
+        .stat-pantry { color: #4CAF50; }
+        .stat-timers { color: #FF9800; }
+
+        /* Pantry Section */
+        .pantry-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .ingredient-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .ingredient-tag {
+            background: #E8F5FF;
+            color: #2196F3;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .remove-ingredient {
+            background: none;
+            border: none;
+            color: #2196F3;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .welcome-title {
+                font-size: 2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .mood-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .recipe-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="material-icons">restaurant</span>
+                MoodMeal
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn" onclick="toggleVoice()">
+                    <span class="material-icons" id="voice-icon">volume_up</span>
+                </button>
+                <button class="icon-btn">
+                    <span class="material-icons">timer</span>
+                    <span class="badge" id="timer-count">2</span>
+                </button>
+                <button class="icon-btn">
+                    <span class="material-icons">notifications</span>
+                    <span class="badge">3</span>
+                </button>
+                <button class="icon-btn">
+                    <span class="material-icons">person</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Welcome Section -->
+            <section class="welcome-section animate-fade-in">
+                <h1 class="welcome-title">Welcome to MoodMeal! 🍽️</h1>
+                <p class="welcome-subtitle">AI-powered recipe recommendations based on your mood</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" onclick="openMoodModal()">
+                        <span class="material-icons">mood</span>
+                        Tell us your mood
+                    </button>
+                    <button class="btn btn-secondary">
+                        <span class="material-icons">restaurant</span>
+                        Browse Recipes
+                    </button>
+                </div>
+            </section>
+
+            <!-- Current Mood & Recommendations -->
+            <section class="mood-recommendations" id="mood-recommendations" style="display: none;">
+                <h2 class="section-title">Perfect for your <span id="current-mood-text">happy</span> mood <span id="current-mood-emoji">😊</span></h2>
+                <div class="recipe-grid" id="recommended-recipes">
+                    <!-- Recommended recipes will be inserted here -->
+                </div>
+            </section>
+
+            <!-- Recipe Section -->
+            <section class="recipe-section">
+                <h2 class="section-title">Featured Recipes</h2>
+                <div class="recipe-grid">
+                    <div class="recipe-card">
+                        <div class="recipe-image">🧀</div>
+                        <div class="recipe-content">
+                            <div class="recipe-header">
+                                <div>
+                                    <h3 class="recipe-title">Comfort Mac and Cheese</h3>
+                                </div>
+                                <button class="favorite-btn" onclick="toggleFavorite(this)">
+                                    <span class="material-icons">favorite_border</span>
+                                </button>
+                            </div>
+                            <p class="recipe-description">Creamy, cheesy comfort food perfect for when you need a warm hug</p>
+                            <div class="recipe-rating">
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                                <span>4.5</span>
+                            </div>
+                            <div class="recipe-tags">
+                                <span class="tag">Comfort</span>
+                                <span class="tag">Vegetarian</span>
+                            </div>
+                            <div class="recipe-footer">
+                                <div class="recipe-info">
+                                    <span>⏱️ 30min</span>
+                                    <span>450 cal</span>
+                                </div>
+                                <button class="btn-cook" onclick="startCooking('Mac and Cheese')">Cook Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recipe-card">
+                        <div class="recipe-image">🥗</div>
+                        <div class="recipe-content">
+                            <div class="recipe-header">
+                                <div>
+                                    <h3 class="recipe-title">Energizing Green Smoothie</h3>
+                                </div>
+                                <button class="favorite-btn" onclick="toggleFavorite(this)">
+                                    <span class="material-icons">favorite_border</span>
+                                </button>
+                            </div>
+                            <p class="recipe-description">A vibrant green smoothie packed with nutrients to boost your energy</p>
+                            <div class="recipe-rating">
+                                <span class="stars">⭐⭐⭐⭐☆</span>
+                                <span>4.2</span>
+                            </div>
+                            <div class="recipe-tags">
+                                <span class="tag">Healthy</span>
+                                <span class="tag">Vegan</span>
+                            </div>
+                            <div class="recipe-footer">
+                                <div class="recipe-info">
+                                    <span>⏱️ 5min</span>
+                                    <span>180 cal</span>
+                                </div>
+                                <button class="btn-cook" onclick="startCooking('Green Smoothie')">Cook Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recipe-card">
+                        <div class="recipe-image">🍝</div>
+                        <div class="recipe-content">
+                            <div class="recipe-header">
+                                <div>
+                                    <h3 class="recipe-title">Romantic Pasta Carbonara</h3>
+                                </div>
+                                <button class="favorite-btn" onclick="toggleFavorite(this)">
+                                    <span class="material-icons">favorite_border</span>
+                                </button>
+                            </div>
+                            <p class="recipe-description">Classic Italian pasta perfect for a romantic dinner</p>
+                            <div class="recipe-rating">
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                                <span>4.8</span>
+                            </div>
+                            <div class="recipe-tags">
+                                <span class="tag">Italian</span>
+                                <span class="tag">Romantic</span>
+                            </div>
+                            <div class="recipe-footer">
+                                <div class="recipe-info">
+                                    <span>⏱️ 25min</span>
+                                    <span>520 cal</span>
+                                </div>
+                                <button class="btn-cook" onclick="startCooking('Pasta Carbonara')">Cook Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recipe-card">
+                        <div class="recipe-image">🥙</div>
+                        <div class="recipe-content">
+                            <div class="recipe-header">
+                                <div>
+                                    <h3 class="recipe-title">Zen Buddha Bowl</h3>
+                                </div>
+                                <button class="favorite-btn" onclick="toggleFavorite(this)">
+                                    <span class="material-icons">favorite_border</span>
+                                </button>
+                            </div>
+                            <p class="recipe-description">A balanced, colorful bowl to promote mindfulness and calm</p>
+                            <div class="recipe-rating">
+                                <span class="stars">⭐⭐⭐⭐☆</span>
+                                <span>4.3</span>
+                            </div>
+                            <div class="recipe-tags">
+                                <span class="tag">Healthy</span>
+                                <span class="tag">Vegetarian</span>
+                            </div>
+                            <div class="recipe-footer">
+                                <div class="recipe-info">
+                                    <span>⏱️ 20min</span>
+                                    <span>380 cal</span>
+                                </div>
+                                <button class="btn-cook" onclick="startCooking('Buddha Bowl')">Cook Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pantry Section -->
+            <section class="pantry-section">
+                <h2 class="section-title">My Pantry</h2>
+                <h3 style="margin-bottom: 1rem;">Available Ingredients</h3>
+                <div class="ingredient-tags">
+                    <div class="ingredient-tag">
+                        Tomatoes
+                        <button class="remove-ingredient" onclick="removeIngredient(this)">×</button>
+                    </div>
+                    <div class="ingredient-tag">
+                        Onions
+                        <button class="remove-ingredient" onclick="removeIngredient(this)">×</button>
+                    </div>
+                    <div class="ingredient-tag">
+                        Garlic
+                        <button class="remove-ingredient" onclick="removeIngredient(this)">×</button>
+                    </div>
+                    <div class="ingredient-tag">
+                        Olive Oil
+                        <button class="remove-ingredient" onclick="removeIngredient(this)">×</button>
+                    </div>
+                </div>
+                <button class="btn btn-secondary" onclick="addIngredient()">
+                    <span class="material-icons">add</span>
+                    Add Ingredient
+                </button>
+            </section>
+
+            <!-- Stats Section -->
+            <section class="stats-section">
+                <h2 class="section-title">Quick Stats</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number stat-recipes">4</div>
+                        <div class="stat-label">Recipes Available</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number stat-favorites" id="favorites-count">0</div>
+                        <div class="stat-label">Favorites</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number stat-pantry" id="pantry-count">4</div>
+                        <div class="stat-label">Pantry Items</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number stat-timers" id="active-timers">0</div>
+                        <div class="stat-label">Active Timers</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Floating Action Button -->
+        <button class="fab" onclick="openMoodModal()">
+            <span class="material-icons">mood</span>
+        </button>
+
+        <!-- Mood Selection Modal -->
+        <div class="modal" id="mood-modal">
+            <div class="modal-content">
+                <button class="close-btn" onclick="closeMoodModal()">×</button>
+                <div class="modal-header">
+                    <h2 class="modal-title">How are you feeling right now?</h2>
+                </div>
+                <div class="mood-grid">
+                    <div class="mood-card" onclick="selectMood('happy', '😊', this)">
+                        <div class="mood-emoji">😊</div>
+                        <div class="mood-name">Happy</div>
+                        <div class="mood-description">Feeling joyful and content</div>
+                    </div>
+                    <div class="mood-card" onclick="selectMood('sad', '😢', this)">
+                        <div class="mood-emoji">😢</div>
+                        <div class="mood-name">Sad</div>
+                        <div class="mood-description">Feeling down or melancholy</div>
+                    </div>
+                    <div class="mood-card" onclick="selectMood('stressed', '😰', this)">
+                        <div class="mood-emoji">😰</div>
+                        <div class="mood-name">Stressed</div>
+                        <div class="mood-description">Feeling overwhelmed</div>
+                    </div>
+                    <div class="mood-card" onclick="selectMood('energetic', '⚡', this)">
+                        <div class="mood-emoji">⚡</div>
+                        <div class="mood-name">Energetic</div>
+                        <div class="mood-description">Full of energy</div>
+                    </div>
+                    <div class="mood-card" onclick="selectMood('calm', '🧘', this)">
+                        <div class="mood-emoji">🧘</div>
+                        <div class="mood-name">Calm</div>
+                        <div class="mood-description">Peaceful and relaxed</div>
+                    </div>
+                    <div class="mood-card" onclick="selectMood('lazy', '😴', this)">
+                        <div class="mood-emoji">😴</div>
+                        <div class="mood-name">Lazy</div>
+                        <div class="mood-description">Feeling sluggish</div>
+                    </div>
+                    <div class="mood-card" onclick="selectMood('romantic', '💕', this)">
+                        <div class="mood-emoji">💕</div>
+                        <div class="mood-name">Romantic</div>
+                        <div class="mood-description">Feeling loving</div>
+                    </div>
+                    <div class="mood-card" onclick="selectMood('adventurous', '🗺️', this)">
+                        <div class="mood-emoji">🗺️</div>
+                        <div class="mood-name">Adventurous</div>
+                        <div class="mood-description">Ready for new things</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let voiceEnabled = true;
+        let favoriteCount = 0;
+        let pantryCount = 4;
+        let activeTimers = 0;
+
+        // Voice toggle
+        function toggleVoice() {
+            voiceEnabled = !voiceEnabled;
+            const icon = document.getElementById('voice-icon');
+            icon.textContent = voiceEnabled ? 'volume_up' : 'volume_off';
+            
+            if (voiceEnabled) {
+                speak('Voice mode enabled');
+            }
+        }
+
+        // Text to speech
+        function speak(text) {
+            if (voiceEnabled && 'speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.8;
+                utterance.pitch = 1;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Modal functions
+        function openMoodModal() {
+            document.getElementById('mood-modal').classList.add('show');
+            speak('Please select your current mood');
+        }
+
+        function closeMoodModal() {
+            document.getElementById('mood-modal').classList.remove('show');
+        }
+
+        // Mood selection
+        function selectMood(mood, emoji, element) {
+            // Remove previous selections
+            document.querySelectorAll('.mood-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Select current mood
+            element.classList.add('selected');
+            
+            // Update mood display
+            document.getElementById('current-mood-text').textContent = mood;
+            document.getElementById('current-mood-emoji').textContent = emoji;
+            document.getElementById('mood-recommendations').style.display = 'block';
+            
+            speak(`You selected ${mood} mood. Here are some perfect recipes for you.`);
+            
+            // Close modal after selection
+            setTimeout(() => {
+                closeMoodModal();
+            }, 1000);
+
+            // Scroll to recommendations
+            setTimeout(() => {
+                document.getElementById('mood-recommendations').scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+            }, 1200);
+        }
+
+        // Favorite toggle
+        function toggleFavorite(button) {
+            const icon = button.querySelector('.material-icons');
+            if (icon.textContent === 'favorite_border') {
+                icon.textContent = 'favorite';
+                icon.style.color = '#FF6B6B';
+                favoriteCount++;
+                speak('Added to favorites');
+            } else {
+                icon.textContent = 'favorite_border';
+                icon.style.color = '';
+                favoriteCount--;
+                speak('Removed from favorites');
+            }
+            
+            document.getElementById('favorites-count').textContent = favoriteCount;
+        }
+
+        // Start cooking
+        function startCooking(recipeName) {
+            activeTimers++;
+            document.getElementById('active-timers').textContent = activeTimers;
+            document.getElementById('timer-count').textContent = activeTimers;
+            
+            speak(`Starting timer for ${recipeName}. Let's cook!`);
+            
+            // Simulate timer completion after 3 seconds for demo
+            setTimeout(() => {
+                activeTimers = Math.max(0, activeTimers - 1);
+                document.getElementById('active-timers').textContent = activeTimers;
+                document.getElementById('timer-count').textContent = activeTimers;
+                speak(`Timer for ${recipeName} completed!`);
+            }, 3000);
+        }
+
+        // Pantry management
+        function addIngredient() {
+            const ingredient = prompt('What ingredient would you like to add?');
+            if (ingredient) {
+                const ingredientTags = document.querySelector('.ingredient-tags');
+                const newTag = document.createElement('div');
+                newTag.className = 'ingredient-tag';
+                newTag.innerHTML = `
+                    ${ingredient}
+                    <button class="remove-ingredient" onclick="removeIngredient(this)">×</button>
+                `;
+                ingredientTags.appendChild(newTag);
+                
+                pantryCount++;
+                document.getElementById('pantry-count').textContent = pantryCount;
+                speak(`Added ${ingredient} to your pantry`);
+            }
+        }
+
+        function removeIngredient(button) {
+            const ingredient = button.parentElement.textContent.replace('×', '').trim();
+            button.parentElement.remove();
+            pantryCount--;
+            document.getElementById('pantry-count').textContent = pantryCount;
+            speak(`Removed ${ingredient} from your pantry`);
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            speak('Welcome to MoodMeal! Tell us your mood to get personalized recipe recommendations.');
+            
+            // Add some interactive animations
+            const cards = document.querySelectorAll('.recipe-card, .mood-card, .stat-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('animate-fade-in');
+                }, index * 100);
+            });
+        });
+
+        // Close modal on outside click
+        document.getElementById('mood-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeMoodModal();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeMoodModal();
+            }
+        });
+    </script>
+</body>
+</html>
