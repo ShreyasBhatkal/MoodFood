@@ -3,89 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MoodMeal – Global Recipes, Local Taste</title>
+  <meta name="description" content="MoodMeal – AI-powered global recipe and nutrition app"/>
+  <title>MoodMeal | Feel Good Food, Every Mood</title>
   <style>
-    body {
-      font-family: sans-serif;
+    * {
       margin: 0;
-      background: #fff;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: #f8f9fa;
       color: #333;
+      line-height: 1.6;
     }
     header {
-      background: #e53935;
+      background-color: #ff6f61;
       color: white;
+      padding: 1.5rem;
       text-align: center;
-      padding: 1rem 0;
     }
     nav {
-      background: #fff;
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    section.hero {
+      padding: 2rem;
+      text-align: center;
+    }
+    section.hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    section.hero p {
+      font-size: 1.1rem;
+      color: #555;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    section.features {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-around;
-      padding: 1rem;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    nav a {
-      text-decoration: none;
-      color: #e53935;
-      font-weight: bold;
-      margin: 0.5rem;
-    }
-    .hero {
-      text-align: center;
-      padding: 2rem;
-      background: url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=60') no-repeat center center/cover;
-      color: white;
-    }
-    .hero h2 {
-      background: rgba(0,0,0,0.5);
-      display: inline-block;
-      padding: 1rem;
-      border-radius: 10px;
-    }
-    .features {
       padding: 2rem 1rem;
     }
     .feature-card {
-      background: #fff0f0;
-      margin: 1rem 0;
-      padding: 1rem;
-      border-left: 5px solid #d32f2f;
-      border-radius: 8px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin: 1rem;
+      padding: 1.5rem;
+      width: 280px;
+    }
+    .feature-card h3 {
+      color: #ff6f61;
+      margin-bottom: 0.5rem;
     }
     footer {
-      background: #e53935;
-      color: white;
       text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-    }
-    .device-showcase {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem;
-    }
-    .device-showcase img {
-      max-width: 300px;
-      margin: 1rem;
-      border: 1px solid #ddd;
-      border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-    @media (min-width: 600px) {
-      .features {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-      }
-      .feature-card {
-        width: 48%;
-      }
-      .device-showcase {
-        flex-direction: row;
-        justify-content: center;
-      }
+      padding: 1.5rem;
+      background-color: #f1f1f1;
+      color: #777;
+      margin-top: 2rem;
     }
   </style>
 </head>
@@ -93,67 +80,63 @@
 
   <header>
     <h1>MoodMeal</h1>
-    <p>Your Smart Recipe & Meal Guide</p>
+    <p>Your Mood. Your Meal. Your Way.</p>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </header>
 
-  <nav>
-    <a href="#">Home</a>
-    <a href="#">Discover Recipes</a>
-    <a href="#">Upload Your Recipe</a>
-    <a href="#">Mood-Based Suggestions</a>
-    <a href="#">Grocery Integration</a>
-    <a href="#">Meal Planner</a>
-    <a href="#">Health & Nutrition</a>
-    <a href="#">Community Feed</a>
-  </nav>
+  <section class="hero">
+    <h1>Eat Smarter. Feel Better.</h1>
+    <p>
+      MoodMeal is an AI-powered food and recipe app that recommends meals based on your mood, nutritional goals, and available ingredients.
+      Whether you're happy, stressed, or craving comfort, we help you eat right for how you feel.
+    </p>
+  </section>
 
-  <div class="hero">
-    <h2>Cook Smart, Eat Happy – Anytime, Anywhere</h2>
-  </div>
-
-  <section class="features">
+  <section class="features" id="features">
     <div class="feature-card">
-      <h3>🌎 Global & Indian Recipes</h3>
-      <p>Find recipes from around the world, localized for Indian kitchens and tastes.</p>
+      <h3>🌍 Global Recipes</h3>
+      <p>Access recipes from all over the world – curated for taste, health, and emotion.</p>
     </div>
     <div class="feature-card">
-      <h3>🧠 AI-based Suggestions</h3>
-      <p>Get recipes based on mood, budget (₹50–₹500), available ingredients, or past favorites.</p>
+      <h3>🧠 Mood-Based Suggestions</h3>
+      <p>Let AI recommend meals that suit your emotional and physical needs in the moment.</p>
     </div>
     <div class="feature-card">
-      <h3>📦 Grocery Ordering</h3>
-      <p>Link your ingredients list to BlinkIt/Zepto and order instantly.</p>
+      <h3>🛒 Smart Grocery Integration</h3>
+      <p>Check missing ingredients and order instantly via Zepto/Blinkit integration.</p>
     </div>
     <div class="feature-card">
-      <h3>🍲 Upload Your Recipe</h3>
-      <p>Join our food community by posting your favorite recipes with photos and stories.</p>
+      <h3>👨‍🍳 Chef Advice</h3>
+      <p>Get expert tips and step-by-step guidance with voice instructions and cooking timers.</p>
     </div>
     <div class="feature-card">
-      <h3>🧑‍🍳 Chef Advice</h3>
-      <p>Connect with professional chefs for tips and cooking sessions (coming soon).</p>
+      <h3>📦 Pantry-Based Cooking</h3>
+      <p>Input your available ingredients and let us find the best recipe fit for your kitchen.</p>
     </div>
     <div class="feature-card">
-      <h3>🗓️ Meal Plans</h3>
-      <p>Generate weekly meal plans with healthy, balanced dishes customized to your goals.</p>
-    </div>
-    <div class="feature-card">
-      <h3>📄 Save & Print</h3>
-      <p>Save recipes as PDF, share with family, or print for kitchen use.</p>
-    </div>
-    <div class="feature-card">
-      <h3>❤️ Health-Conscious Filters</h3>
-      <p>Recipes tailored to dietary needs: allergies, diabetes, keto, gluten-free, etc.</p>
+      <h3>📄 PDF & Nutrition</h3>
+      <p>Save or print meal plans with full nutritional data, calories, and macros.</p>
     </div>
   </section>
 
-  <section class="device-showcase">
-    <img src="https://mockuphone.com/static/images/phones/apple-iphone-14-pro-max-deep-purple.png" alt="iPhone 16 Mockup with MoodMeal UI">
-    <img src="https://mockuphone.com/static/images/phones/samsung-galaxy-s24-ultra-black.png" alt="Samsung Galaxy S24 Mockup with MoodMeal UI">
+  <section id="about" style="padding: 2rem; text-align: center;">
+    <h2>About MoodMeal</h2>
+    <p style="max-width: 700px; margin: 1rem auto;">
+      MoodMeal was created to bridge the gap between emotions and nutrition. Designed by food lovers, built with smart AI, and supported by expert chefs and developers, it's your one-stop solution for joyful, mindful eating.
+    </p>
+  </section>
+
+  <section id="contact" style="padding: 2rem; text-align: center;">
+    <h2>Contact Us</h2>
+    <p>Email: <a href="mailto:hello@moodmeal.app">hello@moodmeal.app</a></p>
   </section>
 
   <footer>
-    <p>Made with ❤️ by MoodMeal Team</p>
-    <p>Contact: <a href="mailto:moodmeal@gmail.com" style="color:white;">shreyasbhatkal26@gmail.com</a> | <a href="https://www.moodmeal.in" style="color:white;">www.moodmeal.in</a></p>
+    &copy; 2025 MoodMeal. All rights reserved.
   </footer>
 
 </body>
